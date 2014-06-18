@@ -75,21 +75,24 @@ class Drone(libardrone.ARDrone):
         sleep(0.2)
 
     def take_photo(self):
+        return self.image   
         self.photo = ""
-        while self.photo != "":
+        while self.photo != "" or self.photo != None:
             self.photo = self.image
+        return self.photo
         
 
     def save_photo(self, photo):
         if photo == None:
             return
-        try:
-            dim = (320,240)
-            pimg = Image.fromstring('RGB', dim, photo)
-            pimg.save("%s.png" % (str(self.team_name)+"_"+str(self.trial_id)+"_"+str(self.photo_count+1)))    
-            self.photo_count += 1
-        except Exception:
-            return
+        #try:
+        dim = (320,240)
+        pimg = Image.fromstring('RGB', dim, photo)
+        pimg.save("%s.png" % (str(self.team_name)+"_"+str(self.trial_id)+"_"+str(self.photo_count+1)))    
+        self.photo_count += 1
+        #except Exception:
+         #   print Exception
+         #   return
     
     def record_trial(self):
         con = sqlite3.connect("results.db")
@@ -109,37 +112,43 @@ class Drone(libardrone.ARDrone):
 
     def takeoff(self):
         super(Drone, self).takeoff()
-        time.sleep(5)
+        sleep(5)
     
     def move_forward(self):
         super(Drone, self).move_forward()
-        time.sleep(2)
+        sleep(1.0)
         super(Drone, self).hover()
-        time.sleep(2)
+        sleep(2)
 
     def move_backward(self):
         super(Drone, self).move_backward()
-        time.sleep(2)
+        sleep(1.0)
         super(Drone, self).hover()
-        time.sleep(2)
+        sleep(2)
 
     def move_left(self):
         super(Drone, self).move_left()
+        sleep(1.0)
         self.sleep()
 
     def move_right(self):
         super(Drone, self).move_right()
+        sleep(1.0)
         self.sleep()
 
     def turn_left(self):
+        self.speed = 0.6
         super(Drone, self).turn_left()
-        time.sleep(5)
+        sleep(1)
         super(Drone, self).hover()
+        self.speed = 0.2
 
     def turn_right(self):
+        self.speed = 0.9
         super(Drone, self).turn_right()
-        time.sleep(5)
+        sleep(1.2)
         super(Drone, self).hover()
+        self.speed = 0.2
 
     def move_up(self):
         super(Drone, self).move_up()
