@@ -5,6 +5,10 @@ d = cd.Drone()
 d.team_name = "will"
 d.takeoff()
 d.turn_right()
+d.land()
+d.halt()
+exit()
+
 d.move_forward()
 d.move_forward()
 p = d.image
